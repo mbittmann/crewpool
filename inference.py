@@ -22,6 +22,12 @@ def run_inference(model, scaler, time_sec, spread, favorite_points, underdog_poi
     payload['home_dog'] = int(spread < 0)
     payload['current_points_favorite'] = favorite_points
     payload['current_points_underdog'] = underdog_points
+
+    if spread < 0:
+        payload['current_spread_difference'] = favorite_points - (underdog_points - spread)
+    else:
+        payload['current_spread_difference'] = favorite_points - (underdog_points + spread)
+
     df = pd.DataFrame.from_dict([payload])
 
     scaled = scaler.transform(df)
