@@ -25,8 +25,11 @@ def main():
     model = inference.load_model(MODEL_PATH)
     scaler = inference.load_scaler(SCALER_PATH)
 
-    inference.run_inference(model, scaler, time_sec, spread, 
-                            favorite_points, underdog_points)
+    pred = inference.run_inference(model, scaler, time_sec, spread, 
+                                   favorite_points, underdog_points)
+
+    print(pred)
+
 
 if __name__ == "__main__":
     main()

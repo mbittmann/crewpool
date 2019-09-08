@@ -22,4 +22,7 @@ def run_inference(model, scaler, time_sec, spread, favorite_points, underdog_poi
     payload['current_points_favorite'] = favorite_points
     payload['current_points_underdog'] = underdog_points
     df = pd.DataFrame.from_dict([payload])
-    print(df)
+    
+    scaled = scaler.transform(df)
+    pred = model.predict(scaled)
+    return pred[0][0]
