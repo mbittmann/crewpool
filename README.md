@@ -20,11 +20,11 @@ The launcher module takes a set of arguments, described below:
 looks like an extra arg. This happens when the home team is the underdog. 
 
 Example: 
-`python launcher.py -t 2700 -s -3 -f 7 -u 14`
+`python launcher.py -t 2700 -s -3.5 -f 7 -u 14`
 
 OR
 
-`python launcher.py --time 2700 --spread -3 --favorite 7 --underdog 14`
+`python launcher.py --time 2700 --spread -3.5 --favorite 7 --underdog 14`
 
 ## Model Load Initialization Latency
 

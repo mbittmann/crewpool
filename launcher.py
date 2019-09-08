@@ -9,7 +9,7 @@ def main():
     parser.add_argument("-t", "--time", help="Time elapsed, in seconds, so far in the game", 
                         required=True, type=int)
     parser.add_argument("-s", "--spread", help="Spread, relative to visiting team", 
-                        required=True, type=int)
+                        required=True, type=float)
     parser.add_argument("-f", "--favorite", help="Current point total for the favorite", 
                         required=True, type=int)
     parser.add_argument("-u", "--underdog", help="Current point total for the underdog", 
