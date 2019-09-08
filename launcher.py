@@ -2,6 +2,7 @@ import inference
 import argparse
 
 MODEL_PATH = 'model/model.h5'
+SCALER_PATH = 'model/scaler.pkl'
 
 def main():
     parser = argparse.ArgumentParser()
@@ -22,6 +23,10 @@ def main():
     underdog_points = args.underdog
 
     model = inference.load_model(MODEL_PATH)
+    scaler = inference.load_scaler(SCALER_PATH)
+
+    inference.run_inference(model, scaler, time_sec, spread, 
+                            favorite_points, underdog_points)
 
 if __name__ == "__main__":
     main()
