@@ -5,6 +5,10 @@
 
 ## Running the Inference Launcher Application
 
+The python launcher model takes a given in-game scenario and prints
+the probability that the favorite will cover. There is around 1 sec
+of latency for model setup/initilization 
+
 The launcher module takes a set of arguments, described below:
 ```
 -t TIME, --time TIME  (Time elapsed, in seconds, so far in the game)
