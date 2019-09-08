@@ -19,12 +19,17 @@ The launcher module takes a set of arguments, described below:
 * Note: Negative numbers are possible for the spread, which may look confusing as it
 looks like an extra arg. This happens when the home team is the underdog. 
 
-Example: 
-`python launcher.py -t 2700 -s -3.5 -f 7 -u 14`
-
-OR
-
+Examples:  
+`python launcher.py -t 2700 -s -3.5 -f 7 -u 14`  
 `python launcher.py --time 2700 --spread -3.5 --favorite 7 --underdog 14`
+
+### Example output
+```
+$ python launcher.py --time 2700 --spread -3.5 --favorite 7 --underdog 3
+Using TensorFlow backend.
+2019-09-08 09:37:25.581943: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+0.5944148
+```
 
 ## Model Load Initialization Latency
 
