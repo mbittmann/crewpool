@@ -1,5 +1,5 @@
 .vscode/
 
-*.h5
+model/
 .ipynb_checkpoints/
 __pycache__/
