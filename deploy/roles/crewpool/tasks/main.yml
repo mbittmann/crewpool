@@ -1,0 +1,11 @@
+---
+  - name: Setup webapp directory
+    file:
+      path: "{{ webapp_home }}"
+      state: directory
+
+  - name: Clone the crewpool repo onto the server
+    git:
+      repo: "{{ repo_url }}"
+      dest: "{{ webapp_home }}"
+      version: "master"
