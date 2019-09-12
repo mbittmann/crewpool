@@ -22,9 +22,9 @@ def main():
     favorite_points = args.favorite
     underdog_points = args.underdog
 
-    assert time_sec > 0, "Time must be a positive integer"
-    assert favorite_points > 0, "Favorite points must be a positive integer"
-    assert favorite_points > 0, "Underdog points must be a positive integer"
+    assert time_sec >= 0, "Time must be a positive integer"
+    assert favorite_points >= 0, "Favorite points must be a positive integer"
+    assert favorite_points >= 0, "Underdog points must be a positive integer"
 
     model = inference.load_model(MODEL_PATH)
     scaler = inference.load_scaler(SCALER_PATH)
