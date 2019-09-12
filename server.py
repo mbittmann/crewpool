@@ -5,7 +5,7 @@ import inference
 Example Usage:
 curl -H "Content-Type: application/json" \
     -X POST localhost:5000/game/inference \
-    -d '{"time_sec": 2000, "spread": -5, "favorite_points": 17, "underdog_points": 15}'
+    -d '{"time_sec": 2000, "hspread": -5, "favorite_points": 17, "underdog_points": 15}'
 """
 
 app = Flask(__name__)
@@ -27,7 +27,8 @@ def get_scalar():
 def hello():
     input = request.get_json()
     time_sec = int(input["time_sec"])
-    spread = input["spread"]
+    hspread = input["hspread"]  # The database stores spread relative to the home team
+    spread = -1*hspread  # The model uses spread relative to the visiting team
     favorite_points = int(input["favorite_points"])
     underdog_points = int(input["underdog_points"])
 
