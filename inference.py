@@ -5,7 +5,7 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 import keras.models
 import joblib
 import pandas as pd
-
+from keras import backend as K
 
 def load_model(model_path):
     model = keras.models.load_model(model_path)
@@ -32,4 +32,5 @@ def run_inference(model, scaler, time_sec, spread, favorite_points, underdog_poi
 
     scaled = scaler.transform(df)
     pred = model.predict(scaled)
+    K.clear_session()
     return pred[0][0]
