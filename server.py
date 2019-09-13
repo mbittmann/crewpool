@@ -1,4 +1,8 @@
 from flask import Flask, request, g
+from werkzeug.exceptions import BadRequest
+import logging
+import logging.handlers as handlers
+
 import inference 
 
 """
@@ -9,6 +13,13 @@ curl -H "Content-Type: application/json" \
 """
 
 app = Flask(__name__)
+
+# Setup logging
+app.logger.setLevel(logging.DEBUG)
+logHandler = handlers.RotatingFileHandler('logs/app.log', maxBytes=1000000, backupCount=5)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logHandler.setFormatter(formatter)
+app.logger.addHandler(logHandler)
 
 MODEL_PATH = 'model/model.h5'
 SCALER_PATH = 'model/scaler.pkl'
@@ -24,8 +35,15 @@ def get_scalar():
     return g.scaler
 
 @app.route("/game/inference", methods=['POST'])
-def hello():
-    input = request.get_json()
+def run_inference():
+    try:
+        input = request.get_json()
+    except BadRequest as e:
+        app.logger.error(e)
+        app.logger.error("Raw request body is: {}".format(request.get_data()))
+        return e.description
+
+    app.logger.debug("JSON request body is: {}".format(input))
     time_sec = int(input["time_sec"])
     hspread = input["hspread"]  # The database stores spread relative to the home team
     spread = -1*hspread  # The model uses spread relative to the visiting team

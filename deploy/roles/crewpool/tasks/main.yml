@@ -9,3 +9,14 @@
       repo: "{{ repo_url }}"
       dest: "{{ webapp_home }}"
       version: "master"
+
+  - name: Install pip requirements to virtual env
+    pip:
+      requirements: "{{ webapp_home }}/requirements.txt"
+      virtualenv: "{{ webapp_home }}/env"
+      virtualenv_python: python3.6
+
+  - name: Setup logs directory
+    file:
+      path: "{{ webapp_home }}/logs"
+      state: directory
