@@ -1,7 +1,11 @@
-from flask import Flask, request, g
+from flask import Flask, request
 from werkzeug.exceptions import BadRequest
 import logging
 import logging.handlers as handlers
+import time
+import tensorflow as tf
+import keras
+import joblib
 
 import inference 
 
@@ -24,15 +28,11 @@ app.logger.addHandler(logHandler)
 MODEL_PATH = 'model/model.h5'
 SCALER_PATH = 'model/scaler.pkl'
 
-def get_model():
-    if 'model' not in g:
-        g.model = inference.load_model(MODEL_PATH)
-    return g.model
-
-def get_scalar():
-    if 'scaler' not in g:
-        g.scaler = inference.load_scaler(SCALER_PATH)
-    return g.scaler
+# load the model the model and scaler globally on startup
+global graph  # Allow the graph to be accessed within the app context
+graph = tf.get_default_graph()
+model =inference.load_model(MODEL_PATH)
+scaler = inference.load_scaler(SCALER_PATH)
 
 @app.route("/game/inference", methods=['POST'])
 def run_inference():
@@ -50,11 +50,12 @@ def run_inference():
     favorite_points = int(input["favorite_points"])
     underdog_points = int(input["underdog_points"])
 
-    model = get_model()
-    scaler = get_scalar()
-    pred = inference.run_inference(model, scaler, time_sec, spread, 
-                                   favorite_points, underdog_points)
-
+    start = time.time()
+    with graph.as_default():
+        pred = inference.run_inference(model, scaler, time_sec, spread, 
+                                       favorite_points, underdog_points)
+    end = time.time()
+    app.logger.debug("Finished in {} secs".format(end - start))
     return {"cover_probability": float(pred)}
     
 
