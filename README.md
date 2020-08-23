@@ -45,6 +45,9 @@ model
 ## Setup
 `pip install -r requirements.txt`
 
+## Running in dev
+`FLASK_DEBUG=1 python server.py`
+
 ## Running the Inference Server Application
 
 The Inference Server is a simple python/Flask RESTful web server. It has one

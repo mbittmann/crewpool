@@ -36,6 +36,9 @@ scaler = inference.load_scaler(SCALER_PATH)
 
 @app.route("/games/<year>/<phase>/<week>")
 def get_game_data(year, phase, week):
+
+    if phase.upper() not in {"PRE", "REG", "POST"}:
+        raise BadRequest('Phase must be one of PRE, REG, POST')
     return year
 
 
