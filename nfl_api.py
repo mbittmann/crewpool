@@ -17,17 +17,21 @@ def init_driver():
     return driver
 
 
-def load_soup_for_page(driver, url):
+def load_soup_for_page(url):
+    driver = init_driver()
     driver.get(url)
     timeout = 15
     try:
         wait = WebDriverWait(driver, timeout, .1)
         ec = EC.presence_of_element_located((By.CLASS_NAME, 'nfl-o-matchup-group'))
         wait.until(ec)
+        html_source = driver.page_source
     except TimeoutException as e:
         raise e
+    finally:
+        driver.quit()
 
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    soup = BeautifulSoup(html_source, 'html.parser')
     return soup
 
 
@@ -71,8 +75,6 @@ def parse_page_to_dict(soup):
 
 
 def get_game_data(year, phase, week):
-    driver = init_driver()
     url = URL_STR.format(year, phase, week)
-    soup = load_soup_for_page(driver, url)
-    driver.close()
+    soup = load_soup_for_page(url)
     return parse_page_to_dict(soup)
