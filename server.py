@@ -42,7 +42,14 @@ def get_game_data(year, phase, week):
     app.logger.debug("Starting request for game data for {}:{}{}".format(year, phase, week))
     if phase.upper() not in {"PRE", "REG", "POST"}:
         raise BadRequest('Phase must be one of PRE, REG, POST')
-    return year
+    
+    game_data = nfl_api.get_game_data(chrome_driver, year, phase, week)
+    return_val = dict()
+    return_val['year'] = year
+    return_val['phase'] = phase
+    return_val['week'] = week
+    return_val['games'] = game_data
+    return return_val
 
 
 @app.route("/game/inference", methods=['POST'])

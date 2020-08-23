@@ -1,6 +1,8 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
+URL_STR = "https://www.nfl.com/schedules/{}/{}{}"
+
 def init_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
@@ -14,6 +16,7 @@ def load_soup_for_page(driver, url):
     driver.get(url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     return soup
+
 
 def parse_page_to_dict(soup):
     matchup_groups = soup.select("section.nfl-o-matchup-group")
@@ -52,10 +55,9 @@ def parse_page_to_dict(soup):
             games.append(game_dict)
             
     return games
-            
-def get_game_data(year, phase, week):
-    driver = init_driver()        
+
+
+def get_game_data(driver, year, phase, week):
     url = URL_STR.format(year, phase, week)
     soup = load_soup_for_page(driver, url)
-    driver.close()
     return parse_page_to_dict(soup)
