@@ -34,6 +34,11 @@ graph = tf.get_default_graph()
 model =inference.load_model(MODEL_PATH)
 scaler = inference.load_scaler(SCALER_PATH)
 
+@app.route("/games/<year>/<phase>/<week>")
+def get_game_data(year, phase, week):
+    return year
+
+
 @app.route("/game/inference", methods=['POST'])
 def run_inference():
     try:
