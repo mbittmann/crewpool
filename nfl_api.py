@@ -70,7 +70,9 @@ def parse_page_to_dict(soup):
     return games
 
 
-def get_game_data(driver, year, phase, week):
+def get_game_data(year, phase, week):
+    driver = init_driver()
     url = URL_STR.format(year, phase, week)
     soup = load_soup_for_page(driver, url)
+    driver.close()
     return parse_page_to_dict(soup)
