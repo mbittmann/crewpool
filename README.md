@@ -1,6 +1,8 @@
 # crewpool
 This repository contains a set of analytics for crewpool. 
 
+**This repo contains code used for personal and non-commercial use by a group of NFL fans and tech hobbyests.**
+
 ## Setup
 `pip install -r requirements.txt`
 
