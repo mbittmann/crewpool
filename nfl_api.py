@@ -1,4 +1,9 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
+
 from bs4 import BeautifulSoup
 
 URL_STR = "https://www.nfl.com/schedules/{}/{}{}"
@@ -14,6 +19,14 @@ def init_driver():
 
 def load_soup_for_page(driver, url):
     driver.get(url)
+    timeout = 15
+    try:
+        wait = WebDriverWait(driver, timeout, .1)
+        ec = EC.presence_of_element_located((By.CLASS_NAME, 'nfl-o-matchup-group'))
+        wait.until(ec)
+    except TimeoutException as e:
+        raise e
+
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     return soup
 
