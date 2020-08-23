@@ -7,6 +7,7 @@ import tensorflow as tf
 import keras
 import joblib
 
+import nfl_api
 import inference 
 
 """
@@ -33,6 +34,8 @@ global graph  # Allow the graph to be accessed within the app context
 graph = tf.get_default_graph()
 model =inference.load_model(MODEL_PATH)
 scaler = inference.load_scaler(SCALER_PATH)
+
+chrome_driver = nfl_api.init_driver()
 
 @app.route("/games/<year>/<phase>/<week>")
 def get_game_data(year, phase, week):
