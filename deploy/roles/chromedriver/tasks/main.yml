@@ -1,0 +1,13 @@
+---
+  - name: Download and extract chromedriver
+    unarchive:
+      src: https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
+      dest: /tmp/
+      remote_src: yes
+
+  - name: Install chrome binary
+    package:
+      name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+      state: present
+    become: yes
+

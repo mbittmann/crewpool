@@ -4,11 +4,34 @@
       path: "{{ webapp_home }}"
       state: directory
 
+  - name: copy deploy key to server
+    copy:
+      src: "private/crewpool_id_rsa"
+      dest: "/home/{{ ansible_user }}/.ssh"
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      mode: '0600'
+
   - name: Clone the crewpool repo onto the server
     git:
       repo: "{{ repo_url }}"
       dest: "{{ webapp_home }}"
       version: "master"
+      key_file: "/home/{{ ansible_user }}/crewpool_id_rsa"
+
+  - name: Upgrade python dependencies
+    pip:
+      name: pip
+      state: latest      
+      virtualenv: "{{ webapp_home }}/env"
+      virtualenv_python: python3.6
+
+  - name: Upgrade python dependencies
+    pip:
+      name: setuptools
+      state: latest      
+      virtualenv: "{{ webapp_home }}/env"
+      virtualenv_python: python3.6
 
   - name: Install pip requirements to virtual env
     pip:

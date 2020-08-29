@@ -2,3 +2,7 @@
   - hosts: all
     roles:
       - crewpool
+
+  - hosts: all
+    roles:
+      - chromedriver
