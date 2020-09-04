@@ -69,6 +69,11 @@ def parse_page_to_dict(soup):
             game_dict['away_score'] = away_score
             game_dict['home'] = home
             game_dict['home_score'] = home_score
+
+            # PLACEHOLDERS
+            game_dict['quarter'] = 1 
+            game_dict['clock'] = '99:99' 
+            game_dict['status'] = 'ACTIVE'             
             games.append(game_dict)
             
     return games

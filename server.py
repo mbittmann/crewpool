@@ -51,9 +51,6 @@ def get_game_data(year, phase, week):
     return_val['phase'] = phase
     return_val['week'] = week
     return_val['games'] = game_data
-    return_val['quarter'] = 1 
-    return_val['clock'] = '99:99' 
-    return_val['status'] = 'ACTIVE' 
     return return_val
 
 
