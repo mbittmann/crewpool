@@ -23,6 +23,7 @@ source env/bin/activate
 In production, the server runs under gunicorn in daemon mode. To start the server, 
 run: 
 ```
+source env/bin/activate
 gunicorn --worker-class gevent --workers 1 --timeout 300 --log-file logs/gunicorn.log --bind 127.0.0.1:8008 server:app --daemon
 ```
 

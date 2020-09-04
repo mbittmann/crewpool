@@ -56,7 +56,7 @@ hspread and converts it to vspread)
 Example REST Usage:
 ```
 curl -H "Content-Type: application/json" \
-    -X POST localhost:5000/game/inference \
+    -X POST https://www.thecrewpool.com/game/inference \
     -d '{"time_sec": 2000, "hspread": -5, "favorite_points": 17, "underdog_points": 15}'
 ```
 
