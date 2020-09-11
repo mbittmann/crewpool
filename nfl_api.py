@@ -42,7 +42,6 @@ def parse_page_to_dict(soup):
         datestr = group.find("h2", class_="d3-o-section-title").get_text()
         game_strips = group.select("div.nfl-c-matchup-strip")
         for strip in game_strips:
-            
             team_abbv = strip.select("span.nfl-c-matchup-strip__team-abbreviation")
             away = team_abbv[0].get_text().strip()
             home = team_abbv[1].get_text().strip()
@@ -62,11 +61,11 @@ def parse_page_to_dict(soup):
             else:
                 game_time = None
 
-
-            if away_score == None:
-                game_dict['status'] = 'PREGAME'
+            quarter_span = strip.select("span.nfl-c-matchup-strip__quarter")
+            if len(quarter_span):
+                quarter = quarter_span[0].get_text().strip()
             else:
-                game_dict['status'] = 'ACTIVE_PLACEHOLDER'
+                quarter = None
             
             game_dict = {}
             game_dict['date'] = datestr
@@ -75,9 +74,13 @@ def parse_page_to_dict(soup):
             game_dict['away_score'] = away_score
             game_dict['home'] = home
             game_dict['home_score'] = home_score
+            game_dict['quarter'] = quarter
 
-            # PLACEHOLDERS
-            game_dict['quarter'] = 1 
+            if away_score == None:
+                game_dict['status'] = 'PREGAME'
+            else:
+                game_dict['status'] = 'ACTIVE_PLACEHOLDER'
+            
             game_dict['clock'] = '99:99'              
             games.append(game_dict)
             
