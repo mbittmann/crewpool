@@ -139,6 +139,39 @@ def parse_upcoming_game(game):
     game_dict['clock'] = None 
     game_dict['status'] = "PREGAME"   
     return game_dict
+   
+
+def parse_completed_game(game):
+    
+    away = game.select("tr.away")
+    if len(away):
+        away_team = away[0].select("span.sb-team-abbrev")[0].get_text().strip()
+        away_score = away[0].select("td.total")[0].get_text().strip()
+    else:
+        away_team = None
+        away_score = None
+        
+    home = game.select("tr.home")
+    if len(home):
+        home_team = home[0].select("span.sb-team-abbrev")[0].get_text().strip()
+        home_score = home[0].select("td.total")[0].get_text().strip()
+    else:
+        home_team = None
+        home_score = None    
+    
+    game_dict = {}
+    game_dict['date'] = None
+    game_dict['day'] = None
+    game_dict['time'] = None    
+    game_dict['away'] = away_team
+    game_dict['away_score'] = away_score
+    game_dict['home'] = home_team
+    game_dict['home_score'] = home_score
+    game_dict['quarter'] = None
+    game_dict['network'] = None
+    game_dict['clock'] = None 
+    game_dict['status'] = "FINAL"   
+    return game_dict 
     
 def get_game_data():
     soup = load_soup_for_page(URL_STR)
@@ -154,4 +187,10 @@ def get_game_data():
     for upcoming_game in upcoming_games:
         game = parse_upcoming_game(upcoming_game)
         games.append(game)
+
+    completed_games = soup.select("section.sb-score.final")
+    for completed_game in completed_games:
+        game = parse_completed_game(completed_game)
+        games.append(game)
+
     return games
