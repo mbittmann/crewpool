@@ -75,6 +75,7 @@ def parse_live_game(game):
         network = None
 
     game_dict = {}
+    game_dict['date'] = None
     game_dict['day'] = None
     game_dict['time'] = None
     game_dict['away'] = away_team
@@ -119,7 +120,14 @@ def parse_upcoming_game(game):
     else:
         network = None    
     
+    date_time = game.select("th.date-time")
+    if len(date_time):
+        date = date_time[0]['data-date'].strip()
+    else:
+        date = None
+
     game_dict = {}
+    game_dict['date'] = date
     game_dict['day'] = day
     game_dict['time'] = time    
     game_dict['away'] = away_team
