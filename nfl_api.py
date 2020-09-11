@@ -66,7 +66,13 @@ def parse_page_to_dict(soup):
                 quarter = quarter_span[0].get_text().strip()
             else:
                 quarter = None
-            
+
+            channel_span = strip.select("p.nfl-c-matchup-strip__networks")
+            if len(channel_span):
+                channel = channel_span[0].get_text().strip()
+            else:
+                channel = None
+
             game_dict = {}
             game_dict['date'] = datestr
             game_dict['time'] = game_time
@@ -75,7 +81,8 @@ def parse_page_to_dict(soup):
             game_dict['home'] = home
             game_dict['home_score'] = home_score
             game_dict['quarter'] = quarter
-
+            game_dict['channel'] = channel
+            
             if away_score == None:
                 game_dict['status'] = 'PREGAME'
             else:
