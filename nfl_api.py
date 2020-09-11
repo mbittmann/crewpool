@@ -61,6 +61,12 @@ def parse_page_to_dict(soup):
                 game_time = game_time_span[0].get_text().strip()
             else:
                 game_time = None
+
+
+            if away_score == None:
+                game_dict['status'] = 'PREGAME'
+            else:
+                game_dict['status'] = 'ACTIVE_PLACEHOLDER'
             
             game_dict = {}
             game_dict['date'] = datestr
@@ -72,8 +78,7 @@ def parse_page_to_dict(soup):
 
             # PLACEHOLDERS
             game_dict['quarter'] = 1 
-            game_dict['clock'] = '99:99' 
-            game_dict['status'] = 'ACTIVE'             
+            game_dict['clock'] = '99:99'              
             games.append(game_dict)
             
     return games
