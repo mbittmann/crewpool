@@ -8,6 +8,7 @@ import keras
 import joblib
 
 import nfl_api
+import espn_api
 import inference 
 
 """
@@ -36,7 +37,7 @@ model =inference.load_model(MODEL_PATH)
 scaler = inference.load_scaler(SCALER_PATH)
 
 @app.route("/games/<year>/<phase>/<week>")
-def get_game_data(year, phase, week):
+def get_game_data_by_week(year, phase, week):
     app.logger.debug("Starting request for game data for {}:{}{}".format(year, phase, week))
     if phase.upper() not in {"PRE", "REG", "POST"}:
         raise BadRequest('Phase must be one of PRE, REG, POST')
@@ -50,6 +51,20 @@ def get_game_data(year, phase, week):
     return_val['year'] = year
     return_val['phase'] = phase
     return_val['week'] = week
+    return_val['games'] = game_data
+    return return_val
+
+@app.route("/games/")
+def get_game_data():
+    app.logger.debug("Starting request for current game data")
+
+    try:
+        game_data = espn_api.get_game_data()
+    except Exception as e:
+        app.logger.error(e)
+        raise HTTPException("Error collecting game data")
+
+    return_val = dict()
     return_val['games'] = game_data
     return return_val
 
