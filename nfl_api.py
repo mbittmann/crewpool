@@ -52,8 +52,8 @@ def parse_page_to_dict(soup):
                 away_score = scores[0].get_text().strip()
                 home_score = scores[1].get_text().strip()
             else:
-                away_score = 0
-                home_score = 0
+                away_score = None
+                home_score = None
 
             game_time_span = strip.select("span.nfl-c-matchup-strip__date-time")
             
