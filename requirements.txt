@@ -1,5 +1,5 @@
 absl-py==0.8.0
-ansible==2.9.12
+ansible==2.10.0
 appnope==0.1.0
 asn1crypto==0.24.0
 astor==0.8.0
